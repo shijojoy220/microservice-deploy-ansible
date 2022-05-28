@@ -6,3 +6,16 @@
     dest: "."
     mode: push
   register: syncfile
+
+- name: Copy Docker compose file
+  tags: sync-push
+  synchronize:
+    src: "docker-compose.yml"
+    dest: "."
+    mode: push
+  register: syncfile
+
+# Command docker-compose replace by new docker compose plugin
+- name: Build and run application
+  command:  "docker compose up -d"
+  become: false
