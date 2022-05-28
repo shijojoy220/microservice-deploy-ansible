@@ -18,12 +18,12 @@
     url:  https://download.docker.com/linux/ubuntu/gpg 
     state: present
 
-- name: Add Docker Repository
+- name: Add Docker Repository URL
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu focal stable
     state: present
 
-- name: Update apt and install docker-ce
+- name: Update apt and install docker-ce packages
   apt:
     pkg:
       - docker-ce
@@ -33,11 +33,23 @@
     state: latest
     update_cache: true
 
-- name: Prerequisites for Non root access script
+- name: Install Prerequisites for Non root access script
   apt:  
     name: uidmap
     state: present
 
-- name: Non root user access script
+- name: Running Non root user access script
   command:  "dockerd-rootless-setuptool.sh install"
   become: false
+
+- name: Set values in Bashrc file
+  become: false
+  blockinfile:
+    path: ~/.bashrc
+    block: |
+      export PATH=/usr/bin:$PATH
+      export DOCKER_HOST=unix:///run/user/1000/docker.sock
+- name: Running Non root user access script
+  command: "source ~/.bashrc"
+  become: false
+  
