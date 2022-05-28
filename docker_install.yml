@@ -1,0 +1,43 @@
+---
+- name: Update apt package
+  apt:
+    update_cache: yes
+
+- name: Install dependent packages
+  apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state:  present
+    update_cache: yes
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url:  https://download.docker.com/linux/ubuntu/gpg 
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli 
+      - containerd.io 
+      - docker-compose-plugin
+    state: latest
+    update_cache: true
+
+- name: Prerequisites for Non root access script
+  apt:  
+    name: uidmap
+    state: present
+
+- name: Non root user access script
+  command:  "dockerd-rootless-setuptool.sh install"
+  become: false

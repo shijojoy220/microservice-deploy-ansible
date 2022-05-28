@@ -1,0 +1,7 @@
+---
+- name: Installation
+  hosts: servers
+  user: ubuntu
+  become: true
+  tasks:
+    - include: docker_install.yml
