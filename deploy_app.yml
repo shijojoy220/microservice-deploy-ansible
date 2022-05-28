@@ -1,0 +1,8 @@
+---
+- name: Copy application source code to remote machine
+  tags: sync-push
+  synchronize:
+    src: "./app"
+    dest: "."
+    mode: push
+  register: syncfile
