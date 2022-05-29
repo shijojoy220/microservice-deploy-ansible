@@ -19,8 +19,7 @@
 
 - name: Run container using compose file
   command:  "docker compose -f docker-compose.yml up -d"
-  become_user:  ubuntu
-
+  become: false
 
 
 # - name: Install Python Docker-Compose
