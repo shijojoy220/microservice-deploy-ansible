@@ -42,11 +42,12 @@
   command: "usermod -aG docker {{ vm_user }}"
   become: true
 
+- name: reset ssh connection to allow user changes to affect ansible user
+  meta: reset_connection
 
-# - name: Make source bashrc
-#   sudo: no   
-#   shell: "source /home/{{ vm_user }}/.bashrc"
 
+
+# Another method for non-root acccess for docker
 
 # - name: Install Prerequisites for Non root access script
 #   become: true

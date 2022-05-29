@@ -17,21 +17,29 @@
     mode: push
   register: syncfile
 
-- name: Run container using compose file
-  command:  "docker compose -f docker-compose.yml up -d"
+- name: install pip3
+  become: true
+  apt: 
+    name: python3-pip 
+    state: present
+
+- name: Install Python Docker-Compose
   become: false
+  pip:
+    name: docker-compose
+
+- name: Create and start services
+  docker_compose:
+    project_src: .
+    files:
+    - docker-compose.yml
+    build: yes
+  become: false
+  register: output
 
 
-# - name: Install Python Docker-Compose
+  # Deploy docker compose without module
+
+# - name: Run container using compose file
+#   command:  "docker compose -f docker-compose.yml up -d"
 #   become: false
-#   pip:
-#     name: docker-compose
-
-# - name: Create and start services
-#   docker_compose:
-#     project_src: .
-#     files:
-#     - docker-compose.yml
-#     build: yes
-#   become: false
-#   register: output
