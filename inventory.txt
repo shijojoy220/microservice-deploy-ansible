@@ -9,3 +9,4 @@ ansible_connection=ssh
 vm_user=ubuntu
 vm_ami=ubuntu
 vm_ami_relase_name=focal
+application_host_port=3000

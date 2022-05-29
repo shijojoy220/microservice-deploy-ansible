@@ -2,6 +2,8 @@
 - name: Installation
   hosts: servers
   user: ubuntu
+  environment:
+    APP_PORT: '{{ application_host_port }}'
   tasks:
     - include: docker_install.yml
     - include: deploy_app.yml
