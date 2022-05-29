@@ -22,6 +22,8 @@ ansible-playbook -i inventory.txt --private-key=/path/to/server/private_key.pem 
 
 ## Access Application
 
-After successfully running the playbook application will appear in URL http://<vm_server_ip>:<port>. ie, 3.110.166.153:3000.
+After successfully running the playbook application will appear in URL http://<vm_server_ip>:<port>. ie, https://3.110.166.153:3000.
+
+Note: Make sure application port in vm server is accessaible from everywhere.
 
 Application URL: [http://sample-application](http://3.110.166.153:3000)
