@@ -38,23 +38,28 @@
     state: latest
     update_cache: true
 
-- name: Install Prerequisites for Non root access script
+- name: Adding user to docker group
+  command: "usermod -aG docker ubuntu"
   become: true
-  apt:  
-    name: uidmap
-    state: present
+  
 
-- name: Running Non root user access script
-  command:  "dockerd-rootless-setuptool.sh install"
-  become: false
+# - name: Install Prerequisites for Non root access script
+#   become: true
+#   apt:  
+#     name: uidmap
+#     state: present
 
-- name: Set values in Bashrc file
-  become: false
-  blockinfile:
-    path: ~/.bashrc
-    block: |
-      export PATH=/usr/bin:$PATH
-      export DOCKER_HOST=unix:///run/user/1000/docker.sock
+# - name: Running Non root user access script
+#   command:  "dockerd-rootless-setuptool.sh install"
+#   become: false
+
+# - name: Set values in Bashrc file
+#   become: false
+#   blockinfile:
+#     path: ~/.bashrc
+#     block: |
+#       export PATH=/usr/bin:$PATH
+#       export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 # - name: Running Non root user access script
 #   command: source ~/.bashrc

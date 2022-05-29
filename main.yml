@@ -3,5 +3,5 @@
   hosts: servers
   user: ubuntu
   tasks:
-    # - include: docker_install.yml
-    - include:  deploy_app.yml
+    - include: docker_install.yml
+    - include: deploy_app.yml

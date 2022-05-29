@@ -1,6 +1,7 @@
 ---
 - name: Copy application source code to remote machine
   tags: sync-push
+  become: false
   synchronize:
     src: "./app"
     dest: "."
@@ -9,13 +10,29 @@
 
 - name: Copy Docker compose file
   tags: sync-push
+  become: false
   synchronize:
     src: "docker-compose.yml"
     dest: "."
     mode: push
   register: syncfile
 
-# Command docker-compose replace by new docker compose plugin
-- name: Build and run application
-  command:  "docker compose up -d"
-  become: false
+- name: Run container using compose file
+  command:  "docker compose -f docker-compose.yml up -d"
+  become_user:  ubuntu
+
+
+
+# - name: Install Python Docker-Compose
+#   become: false
+#   pip:
+#     name: docker-compose
+
+# - name: Create and start services
+#   docker_compose:
+#     project_src: .
+#     files:
+#     - docker-compose.yml
+#     build: yes
+#   become: false
+#   register: output
